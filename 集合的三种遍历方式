@@ -1,0 +1,37 @@
+package Itheimaday14.test4;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+public class Demo {
+    public static void main(String[] args) {
+        List<Student> li = new ArrayList<Student>();
+        Student s1 = new Student("萨达是否", 18);
+        Student s2 = new Student("沙发", 20);
+        Student s3 = new Student("小组", 5);
+
+        li.add(s1);
+        li.add(s2);
+        li.add(s3);
+
+//        使用迭代器的方式遍历集合
+        Iterator<Student> i = li.iterator();
+        while (i.hasNext()){
+            Student s = i.next();
+            System.out.println(s.getAge()+","+s.getName());
+        }
+
+//        使用for循环方式遍历集合
+        for (int x = 0; x < li.size(); x++) {
+            Student s = li.get(x);
+            System.out.println(s.getAge()+","+s.getName());
+        }
+
+//        使用增强for来遍历集合
+        for(Student s : li){
+            System.out.println(s.getAge()+","+s.getName());
+        }
+
+    }
+}
