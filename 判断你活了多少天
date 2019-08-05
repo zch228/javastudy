@@ -1,0 +1,28 @@
+package Itheimaday13.homework2;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Scanner;
+
+//计算出自己来到这个世界上多少天
+public class Test {
+//思路：1970年到现在的时间-1970年到出生的时间=出生时间-现在的时间
+public static void main(String[] args) throws ParseException {
+//   创建Scanner对象
+    Scanner sc = new Scanner(System.in);
+    System.out.println("请输入出生年月日,参照yyyy-MM-dd");
+    String s = sc.nextLine();
+//   创建SimpleDateFormat对象
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//   调用SimpleDateFormat中的parse方法，将字符串转换成date对象
+    Date d2 = sdf.parse(s);
+//    新建date对象，获取当前时间
+    Date d = new Date();
+//    两个时间距离1970年过了多少毫秒
+    long t1 = d2.getTime();
+    long t2 = d.getTime();
+//    将毫秒转化为天，并输出活了多少天
+    System.out.println("你活了"+(t2-t1)/1000/60/60/24+"天");
+}
+}
