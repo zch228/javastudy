@@ -1,0 +1,85 @@
+package cn.itcast.demo02;
+
+public class Poker implements Comparable<Poker> {
+    private String color;
+    private int number;
+
+    public Poker(String color, int number) {
+        this.color = color;
+        this.number = number;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
+    @Override
+    public int compareTo(Poker p) {
+        return this.number - p.number;
+    }
+
+    @Override
+    public String toString() {
+        return color;
+    }
+}
+
+
+
+package cn.itcast.demo02;
+
+import java.util.ArrayList;
+import java.util.Collections;
+
+public class Test6 {
+    public static void main(String[] args) {
+        // 面向对象：定义一个类：牌 ： 花色，编号
+        // 准备牌：
+        String[] colors = {"♥","♠","♦","♣"};
+        String[] numbers = {"3","4","5","6","7","8","9","10","J","Q","K","A","2"};
+        ArrayList<Poker> pokers = new ArrayList<>();
+        int index = 0;
+        for (String number : numbers) {
+            for (String color : colors) {
+                pokers.add(new Poker(color + number, index++));
+            }
+        }
+        pokers.add(new Poker("小王", index++));
+        pokers.add(new Poker("大王", index));
+        // 洗牌：
+        Collections.shuffle(pokers);
+        // 发牌
+        ArrayList<Poker> p1 = new ArrayList<>();
+        ArrayList<Poker> p2 = new ArrayList<>();
+        ArrayList<Poker> p3 = new ArrayList<>();
+        for (int i = 0; i < pokers.size(); i++) {
+            if (i % 3 == 0) {
+                p1.add(pokers.get(i));
+            } else if (i % 3 == 1) {
+                p2.add(pokers.get(i));
+            } else {
+                p3.add(pokers.get(i));
+            }
+        }
+        // 排序：
+        Collections.sort(p1);
+        Collections.sort(p2);
+        Collections.sort(p3);
+        // 看牌：
+        System.out.println(p1);
+        System.out.println(p2);
+        System.out.println(p3);
+    }
+}
