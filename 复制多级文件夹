@@ -1,0 +1,52 @@
+package itheimaday19.test3;
+
+import java.io.*;
+
+//         复制多级文件夹
+public class Test {
+    public static void main(String[] args) throws IOException {
+//        创建源文件目录和目的地目录
+        File dir = new File("E:\\java.study\\itheima\\Test");
+        File des = new File("E:\\java.study\\itheima02\\新建文件夹");
+        copy(dir, des);
+    }
+    //       复制文件夹
+    public static void copy(File dir, File des) throws IOException {
+//        在目标处创建该文件夹
+        File f1 = new File(des,dir.getName());
+        f1.mkdirs();
+//        源文件判断是否是文件夹
+        if (dir.isDirectory()) {
+//            是文件夹则遍历该文件夹，获取所有文件
+            File[] files = dir.listFiles();
+            for (File file : files) {
+//                获取目标路径
+             File desfolder = new File(f1,file.getName());
+//             在目标路径处创建文件夹
+             desfolder.mkdirs();
+//             递归调用方法，判断下级文件是否为文件夹并复制
+             copy(file,desfolder);
+            }
+            }else {
+//            如果不是文件夹，则是文件，调用文件复制方法复制文件，之前获取目录文件路径
+            File desfile = new File(f1,dir.getName());
+            copyfile(dir,desfile);
+        }
+        }
+
+
+
+
+//      利用字节流复制文件
+public static void copyfile(File dir,File des)throws IOException{
+        BufferedOutputStream bos=new BufferedOutputStream(new FileOutputStream(des));
+        BufferedInputStream bis=new BufferedInputStream(new FileInputStream(dir));
+        byte[]b=new byte[1024];
+        int len;
+        while((len=bis.read(b))!=-1){
+        bos.write(b,0,len);
+        bos.flush();
+        }
+        bos.close();
+        bis.close();
+} }
