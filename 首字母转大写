@@ -1,0 +1,44 @@
+package homework.day02;
+
+
+//  已知字符串如下:
+//		"good good study day day up"
+//		请定义方法将字符串中每一个单词的首字母大写,其余的小写
+//
+//		最后打印的结果如下: (各位,千万别 sout("Good Good Study Day Day Up"); 哟)
+//			"Good Good Study Day Day Up"
+public class 首字母转大写 {
+    public static void main(String[] args) {
+        String s = "good good study day day up";
+        System.out.println(method(s));
+        System.out.println(method2(s));
+    }
+//方法1：
+    static String method(String  s2) {
+//        将字符串分割成字符串数组，按照空格分割
+        String[] s1 = s2.split(" ");
+        String s3 = "";
+//        遍历字符串数组，获得单个字符串
+        for (String s : s1) {
+//            将单个字符串拆分成单个字符数组
+            char[] c = s.toCharArray();
+//            将数组中第一个字母变成大写，并用一个字符串接收
+           c[0] =  Character.toUpperCase(c[0]);
+            s3+= String.valueOf(c)+" ";
+        }return s3;
+    }
+//    方法2（方法1改进版）
+    static String method2(String s) {
+//        将字符串转换成字符数组
+        char[] chars = s.toCharArray();
+//        将第一个字符转换成大写
+        chars[0] =  Character.toUpperCase(chars[0]);
+//        遍历数组，如果碰到空格，则将空格后的字符转换成大写
+        for (int i = 0; i < chars.length; i++) {
+            if (chars[i] == ' ') {
+                chars[i+1]= Character.toUpperCase(chars[i+1]);
+            }
+        }
+        return String.valueOf(chars);
+    }
+    }
