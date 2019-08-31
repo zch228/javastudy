@@ -1,0 +1,54 @@
+package Game;
+
+import java.io.*;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+//从网站中抓取图片，并下载到电脑中
+public class Test5 {
+    public static void main(String[] args) throws Exception{
+        // 请求网络获取页面的源数据
+        URL url = new URL("https://image.baidu.com/search/index?tn=baiduimage&ct=201326592&lm=-1&cl=2&ie=gb18030&word=%C3%C0%C5%AE&fr=ala&ala=1&alatpl=adress&pos=0&hs=2&xthttps=111111");
+        // 获取数据的输入流对象
+        InputStream is = url.openStream();
+        // 包装成字符缓冲输入流
+        BufferedReader br = new BufferedReader(new InputStreamReader(is));
+        String line;
+        ArrayList<String> list = new ArrayList<>();
+        //  读取每一行数据
+        while ((line = br.readLine()) != null) {
+            // 正则校验：
+            Pattern pattern = Pattern.compile("http.{10,100}\\.jpg");
+            Matcher matcher = pattern.matcher(line);
+            // 把匹配上正则的字符串，存储到集合中
+            while (matcher.find()) {
+                String str = matcher.group();
+                list.add(str);
+            }
+        }
+        br.close();
+
+
+        // 遍历集合，获取每一个图片的URL，下载图片。
+
+
+        for (String imgUrl : list) {
+            try {
+                // 获取图片的url的流对象
+                InputStream imgIs = new URL(imgUrl).openStream();
+                // 写入指定的图片文件中
+                FileOutputStream fos = new FileOutputStream("d:\\"+System.currentTimeMillis()+".jpg");
+                byte[] bytes = new byte[1024 * 8];
+                int len;
+                while ((len = imgIs.read(bytes)) != -1) {
+                    fos.write(bytes, 0, len);
+                }
+                imgIs.close();
+                fos.close();
+            } catch (Exception e) {
+                // 如果遇到url不可用，则跳过此url
+            }
+        }
+    }
+}
