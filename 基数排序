@@ -1,0 +1,62 @@
+package 算法;
+
+import java.util.Arrays;
+
+public class 基数排序 {
+    public static void main(String[] args) {
+        int[] arr = {2, 523, 3, 54, 435, 56, 676, 76, 2, 57, 454};
+        System.out.println(Arrays.toString(arr));
+        redixSort(arr);
+        System.out.println(Arrays.toString(arr));
+    }
+
+    public static void redixSort(int[] arr) {
+        int max = Integer.MIN_VALUE;
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] > max) {
+                max = arr[i];
+            }
+        }
+
+//        计算最大数是几位数
+        int maxlength = (max + "").length();
+//        用于存储临时数据的数组
+        int[][] temp = new int[10][arr.length];
+//        用于记录在temp中相应的数组中存放数字的数量
+        int[] count = new int[10];
+//        比较的次数
+        for (int i = 0,n=1; i < maxlength; i++,n*=10) {
+//            把每一个数字分别计算余数
+            for (int j = 0; j <arr.length ; j++) {
+                int ys = arr[j] / n % 10;
+//                将当前遍历的数字放到指定的数组中
+                temp[ys][count[ys]] = arr[j];
+//                记录数量
+                count[ys]++;
+            }
+           /* if (i == 0) {
+                for (int num[] : temp) {
+                    System.out.println(Arrays.toString(num));
+                }
+            }*/
+//           记录取的元素需要放的位置
+            int index = 0;
+//           把数字取出来
+            for (int k = 0; k < count.length; k++) {
+//                记录数量的数组中，当前余数记录的数量不为0
+                if (count[k] != 0) {
+//                    循环取出元素
+                    for (int l = 0; l < count[k]; l++) {
+//                      取出元素
+                        arr[index] = temp[k][l];
+//                        记录下一个位置
+                        index++;
+                    }
+//                   把数量置空为0|
+                    count[k] = 0;
+                }
+            }
+
+        }
+    }
+}
