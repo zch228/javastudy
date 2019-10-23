@@ -1,0 +1,43 @@
+package 算法;
+
+import java.util.Arrays;
+
+public class 快速排序 {
+    public static void main(String[] args) {
+        int[] arr = {2, 523, 3, 54, 435, 56, 676, 76, 2, 57, 454};
+        System.out.println(Arrays.toString(arr));
+        quicksort(arr, 0, arr.length -1);
+        System.out.println(Arrays.toString(arr));
+    }
+
+    public static void quicksort(int[] arr, int start, int end) {
+        if (start < end) {
+//        把数组中第0个数字设置为标准数
+            int stard = arr[start];
+//        记录需要排序的下标
+            int low = start;
+            int high = end;
+//      循环找比标准数大的数和比标准数小的数
+            while (low < high) {
+//            右边数字币标准数大，则直接吧下标向前移
+                while (low < high &&  arr[high] >= stard) {
+                    high--;
+                }
+//             右边数字币标准数小，使用右边数字替换左边的数字
+                arr[low] = arr[high];
+//            左边数字比标准数小，则移动左边的坐标
+                while (low < high && arr[low] <= stard) {
+                    low++;
+                }
+//             右边数字币标准数小，使用右边数字替换左边的数字
+                arr[high] = arr[low];
+            }
+//        把标准数付给低所在的元素（高或者低都一样，此时已经重复）
+            arr[low] = stard;
+//        处理所有的小的数字
+            quicksort(arr, start, low);
+//        处理所有的大的数字
+            quicksort(arr, low+1, end);
+        }
+    }
+}
